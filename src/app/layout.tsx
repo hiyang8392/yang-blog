@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
 const notoSansTC = Noto_Sans_TC({
   variable: "--font-sans",
@@ -45,7 +46,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          {children}
+          <div className="min-h-[calc(100vh-4rem)]">{children}</div>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
