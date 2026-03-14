@@ -50,9 +50,8 @@ const PROJECTS = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
-      <main className="mx-auto px-6 py-16 sm:py-24 max-w-3xl">
-        <section className="mb-20">
+    <div className="py-16 sm:py-24">
+      <section className="mb-20">
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
             Hi！ I&apos;m Yang
           </h1>
@@ -66,7 +65,7 @@ export default function Home() {
               最新文章
             </h2>
             <Link
-              href="/blog"
+              href="/posts"
               className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               查看全部
@@ -128,7 +127,6 @@ export default function Home() {
             ))}
           </div>
         </section>
-      </main>
     </div>
   );
 }

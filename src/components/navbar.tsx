@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV_LINKS = [
-  { href: "/blog", label: "Blog" },
+  { href: "/posts", label: "Posts" },
   { href: "/projects", label: "Projects" },
   { href: "/about", label: "About" },
 ];
