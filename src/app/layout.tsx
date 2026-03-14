@@ -5,12 +5,12 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 
-const notoSansTC = Noto_Sans_TC({
+const NOTO_SANS_TC = Noto_Sans_TC({
   variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const GEIST_MONO = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="zh-Hant" suppressHydrationWarning>
       <body
-        className={`${notoSansTC.variable} ${geistMono.variable} antialiased`}
+        className={`${NOTO_SANS_TC.variable} ${GEIST_MONO.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
