@@ -43,7 +43,7 @@ export default async function PostPage({
   if (!post) notFound();
 
   return (
-    <article className="py-16 sm:py-24">
+    <article className="py-12 sm:py-16">
       <Link
         href="/posts"
         className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"

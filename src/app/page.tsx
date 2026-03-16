@@ -50,7 +50,7 @@ const PROJECTS = [
 
 export default function Home() {
   return (
-    <div className="py-16 sm:py-24">
+    <div className="py-12 sm:py-16">
       <section className="mb-20">
         <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
           Hi！ I&apos;m Yang

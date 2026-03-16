@@ -24,7 +24,7 @@ const POSTS = [
 
 export default function Posts() {
   return (
-    <div className="py-16 sm:py-24">
+    <div className="py-12 sm:py-16">
       <h1 className="mb-12 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
         所有文章
       </h1>
