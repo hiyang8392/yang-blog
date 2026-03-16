@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -126,4 +127,73 @@
   html {
     @apply font-sans;
   }
+}
+
+/* rehype-pretty-code — dual theme switching */
+code[data-theme*=" "],
+code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+.dark code[data-theme*=" "],
+.dark code[data-theme*=" "] span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
+.dark [data-rehype-pretty-code-figure] pre {
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+/* rehype-pretty-code — code block layout */
+[data-rehype-pretty-code-figure] pre {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  padding: 0.75rem 0;
+}
+
+[data-rehype-pretty-code-figure] pre > code {
+  display: grid;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  counter-reset: line;
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+  padding: 0 1.25rem;
+}
+
+/* rehype-pretty-code — highlighted lines */
+[data-highlighted-line] {
+  background-color: oklch(0.5 0.05 260 / 12%);
+  border-left: 2px solid oklch(0.65 0.18 260);
+  padding-left: calc(1.25rem - 2px);
+}
+
+.dark [data-highlighted-line] {
+  background-color: oklch(0.6 0.05 260 / 10%);
+}
+
+/* rehype-pretty-code — inline code */
+[data-rehype-pretty-code-figure] > code {
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  border: 1px solid var(--border);
+}
+
+/* Override @tailwindcss/typography prose pre/code styles for syntax highlighting */
+.prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  color: unset;
+  background-color: unset;
+  padding: unset;
+  border-radius: unset;
+  overflow-x: unset;
+}
+
+.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  color: unset;
+  background-color: unset;
 }
