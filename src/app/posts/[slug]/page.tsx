@@ -4,13 +4,16 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import { ArrowLeft } from "lucide-react";
+import { prisma } from "@/lib/prisma";
+import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { getPost, MOCK_POSTS } from "@/app/data/mock-posts";
 
-export function generateStaticParams() {
-  return MOCK_POSTS.map((post) => ({
-    slug: post.slug
-  }));
+export async function generateStaticParams() {
+  const posts = await prisma.post.findMany({
+    where: { published: true },
+    select: { slug: true },
+  });
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({
@@ -19,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPostBySlug(slug);
   if (!post) {
     return {
       title: "文章不存在",
@@ -28,8 +31,15 @@ export async function generateMetadata({
 
   return {
     title: `${post.title} - Hi Yang`,
-    description: post.title,
+    description: post.excerpt ?? post.title,
   };
+}
+
+async function getPostBySlug(slug: string) {
+  return prisma.post.findUnique({
+    where: { slug, published: true },
+    include: { category: true, tags: true },
+  });
 }
 
 export default async function PostPage({
@@ -38,7 +48,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPostBySlug(slug);
 
   if (!post) notFound();
 
@@ -54,10 +64,12 @@ export default async function PostPage({
 
       <header className="mb-12">
         <div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
-          <Badge variant="secondary" className="font-medium">
-            {post.category}
-          </Badge>
-          <span>{post.date}</span>
+          {post.category && (
+            <Badge variant="secondary" className="font-medium">
+              {post.category.name}
+            </Badge>
+          )}
+          {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
           {post.title}
