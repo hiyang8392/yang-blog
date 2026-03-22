@@ -8,11 +8,22 @@ import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
-export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-    select: { slug: true },
+async function getPost(slug: string) {
+  return prisma.post.findUnique({
+    where: { slug, published: true },
+    include: { category: true, tags: true },
   });
+}
+
+async function getPosts() {
+  return prisma.post.findMany({
+    where: { published: true },
+    include: { category: true, tags: true },
+  });
+}
+
+export async function generateStaticParams() {
+  const posts = await getPosts();
   return posts.map((post) => ({ slug: post.slug }));
 }
 
@@ -22,7 +33,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getPost(slug);
   if (!post) {
     return {
       title: "文章不存在",
@@ -35,25 +46,18 @@ export async function generateMetadata({
   };
 }
 
-async function getPostBySlug(slug: string) {
-  return prisma.post.findUnique({
-    where: { slug, published: true },
-    include: { category: true, tags: true },
-  });
-}
-
 export default async function PostPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getPost(slug);
 
   if (!post) notFound();
 
   return (
-    <article className="py-12 sm:py-16">
+    <article className="py-8 sm:py-12">
       <Link
         href="/posts"
         className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -69,7 +73,15 @@ export default async function PostPage({
               {post.category.name}
             </Badge>
           )}
-          {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
+          {post.publishedAt && (
+            <span>
+              {formatDate(post.publishedAt, {
+                hour: "2-digit",
+                minute: "2-digit",
+                hourCycle: "h24",
+              })}
+            </span>
+          )}
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
           {post.title}

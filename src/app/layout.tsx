@@ -35,11 +35,13 @@ export default function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
-          <Navbar />
-          <main className="mx-auto px-6 max-w-3xl min-h-[calc(100vh-4rem)]">
-            {children}
-          </main>
-          <Footer />
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="mx-auto px-6 w-full max-w-3xl flex-1 flex flex-col">
+              {children}
+            </main>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>

@@ -1,48 +1,69 @@
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { formatDate } from "@/lib/utils";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { Badge } from "@/components/ui/badge";
 
-const POSTS = [
-  {
-    title: "第三篇第三篇第三篇第三篇第三篇第三篇第三篇第三篇",
-    date: "2026 年 3 月 8 日",
-    slug: "/posts/post3",
-    category: "前端",
-  },
-  {
-    title: "第二篇第二篇",
-    date: "2026 年 3 月 1 日",
-    slug: "/posts/post2",
-    category: "前端",
-  },
-  {
-    title: "第一篇第一篇第一篇第一篇",
-    date: "2026 年 2 月 20 日",
-    slug: "/posts/post1",
-    category: "前端",
-  },
-];
+const POSTS_PER_PAGE = 10;
 
-export default function Posts() {
+async function getPosts(page: number) {
+  const skip = (page - 1) * POSTS_PER_PAGE;
+
+  const [posts, totalCount] = await Promise.all([
+    prisma.post.findMany({
+      where: { published: true },
+      orderBy: { publishedAt: "desc" },
+      include: { category: true },
+      skip,
+      take: POSTS_PER_PAGE,
+    }),
+    prisma.post.count({ where: { published: true } }),
+  ]);
+
+  return {
+    posts,
+    totalPages: Math.ceil(totalCount / POSTS_PER_PAGE),
+  };
+}
+
+export default async function Posts({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const currentPage = Math.max(1, Number(pageParam) || 1);
+  const { posts, totalPages } = await getPosts(currentPage);
+
   return (
-    <div className="py-12 sm:py-16">
+    <div className="py-8 sm:py-12 flex flex-1 flex-col">
       <h1 className="mb-12 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
         所有文章
       </h1>
       <div className="flex flex-col">
-        {POSTS.map((post, index) => (
+        {posts.map((post, index) => (
           <article
             key={post.slug}
-            className={`${index !== POSTS.length - 1 && "border-b border-border"} ${index === 0 && "pt-0"} ${index !== 0 && "pt-8"}`}
+            className={`${index !== posts.length - 1 && "border-b border-border"} ${index === 0 && "pt-0"} ${index !== 0 && "pt-8"}`}
           >
             <div className="mb-2 flex items-center gap-3 text-sm text-muted-foreground">
-              <Badge variant="secondary" className="font-medium">
-                {post.category}
-              </Badge>
-              <span>{post.date}</span>
+              {post.category && (
+                <Badge variant="secondary" className="font-medium">
+                  {post.category.name}
+                </Badge>
+              )}
+              {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
             </div>
             <h2 className="mb-4 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
               <Link
-                href={post.slug}
+                href={`/posts/${post.slug}`}
                 className="transition-colors hover:text-primary"
               >
                 {post.title}
@@ -51,6 +72,34 @@ export default function Posts() {
           </article>
         ))}
       </div>
+      {totalPages > 1 && (
+        <Pagination className="mt-auto pt-12">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href={`/posts?page=${currentPage - 1}`}
+                disabled={currentPage <= 1}
+              />
+            </PaginationItem>
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink
+                  href={`/posts?page=${index + 1}`}
+                  isActive={index + 1 === currentPage}
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext
+                href={`/posts?page=${currentPage + 1}`}
+                disabled={currentPage >= totalPages}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 }
