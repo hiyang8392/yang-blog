@@ -3,7 +3,7 @@ import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
-import { ArrowLeft } from "lucide-react";
+import { ChevronLeftIcon } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -62,7 +62,7 @@ export default async function PostPage({
         href="/posts"
         className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
-        <ArrowLeft className="size-4" />
+        <ChevronLeftIcon className="size-4" />
         返回文章列表
       </Link>
 
@@ -74,13 +74,7 @@ export default async function PostPage({
             </Badge>
           )}
           {post.publishedAt && (
-            <span>
-              {formatDate(post.publishedAt, {
-                hour: "2-digit",
-                minute: "2-digit",
-                hourCycle: "h24",
-              })}
-            </span>
+            <span>{formatDate(post.publishedAt, { withTime: true })}</span>
           )}
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">

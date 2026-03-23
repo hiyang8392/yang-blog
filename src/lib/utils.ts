@@ -5,11 +5,21 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(date: Date, options?: Intl.DateTimeFormatOptions) {
-  return new Intl.DateTimeFormat("zh-TW", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    ...options,
-  }).format(date);
+const dateFormatter = new Intl.DateTimeFormat("zh-TW", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
+const dateTimeFormatter = new Intl.DateTimeFormat("zh-TW", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h24",
+});
+
+export function formatDate(date: Date, options?: { withTime?: boolean }) {
+  return options?.withTime ? dateTimeFormatter.format(date) : dateFormatter.format(date);
 }
