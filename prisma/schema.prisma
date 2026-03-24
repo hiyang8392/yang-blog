@@ -42,3 +42,15 @@ model Tag {
   description String?
   posts       Post[]
 }
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  image       String?
+  demoUrl     String?
+  githubUrl   String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
