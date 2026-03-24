@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
-import { getPosts, getTotalPages, PostsList } from "@/components/posts-list";
+import { getPostList, getTotalPages } from "@/lib/data/posts";
+import { PostsList } from "@/components/posts-list";
 
 export async function generateStaticParams() {
   const totalPages = await getTotalPages();
@@ -24,7 +25,7 @@ export default async function PostsPage({
     redirect("/posts");
   }
 
-  const { posts, totalPages } = await getPosts(currentPage);
+  const { posts, totalPages } = await getPostList(currentPage);
 
   if (currentPage > totalPages) {
     notFound();

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import type { getPostList } from "@/lib/data/posts";
 import { formatDate } from "@/lib/utils";
 import {
   Pagination,
@@ -11,43 +11,16 @@ import {
 } from "@/components/ui/pagination";
 import { Badge } from "@/components/ui/badge";
 
-const POSTS_PER_PAGE = 10;
-
 const getPageUrl = (page: number) => {
   return page === 1 ? "/posts" : `/posts/page/${page}`;
 };
-
-export async function getPosts(page: number) {
-  const skip = (page - 1) * POSTS_PER_PAGE;
-
-  const [posts, totalCount] = await Promise.all([
-    prisma.post.findMany({
-      where: { published: true },
-      orderBy: { publishedAt: "desc" },
-      include: { category: true },
-      skip,
-      take: POSTS_PER_PAGE,
-    }),
-    prisma.post.count({ where: { published: true } }),
-  ]);
-
-  return {
-    posts,
-    totalPages: Math.ceil(totalCount / POSTS_PER_PAGE),
-  };
-}
-
-export async function getTotalPages() {
-  const totalCount = await prisma.post.count({ where: { published: true } });
-  return Math.ceil(totalCount / POSTS_PER_PAGE);
-}
 
 export function PostsList({
   posts,
   currentPage,
   totalPages,
 }: {
-  posts: Awaited<ReturnType<typeof getPosts>>["posts"];
+  posts: Awaited<ReturnType<typeof getPostList>>["posts"];
   currentPage: number;
   totalPages: number;
 }) {

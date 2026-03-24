@@ -4,27 +4,12 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import { ChevronLeftIcon } from "lucide-react";
-import { prisma } from "@/lib/prisma";
+import { getPost, getAllPublishedSlugs } from "@/lib/data/posts";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
-async function getPost(slug: string) {
-  return prisma.post.findUnique({
-    where: { slug, published: true },
-    include: { category: true, tags: true },
-  });
-}
-
-async function getPosts() {
-  return prisma.post.findMany({
-    where: { published: true },
-    include: { category: true, tags: true },
-  });
-}
-
 export async function generateStaticParams() {
-  const posts = await getPosts();
-  return posts.map((post) => ({ slug: post.slug }));
+  return getAllPublishedSlugs();
 }
 
 export async function generateMetadata({
