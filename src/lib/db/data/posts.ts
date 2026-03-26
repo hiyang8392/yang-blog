@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/db/prisma";
 
 const POSTS_PER_PAGE = 10;
 
@@ -41,4 +41,3 @@ export async function getTotalPages() {
   const totalCount = await prisma.post.count({ where: { published: true } });
   return Math.ceil(totalCount / POSTS_PER_PAGE);
 }
-

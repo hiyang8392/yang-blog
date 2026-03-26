@@ -1,4 +1,4 @@
-import { getPostList } from "@/lib/data/posts";
+import { getPostList } from "@/lib/db/data/posts";
 import { PostsList } from "@/components/posts-list";
 
 export default async function Posts() {

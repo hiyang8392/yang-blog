@@ -1,4 +1,4 @@
-import { getProjects } from "@/lib/data/projects";
+import { getProjects } from "@/lib/db/data/projects";
 import { ProjectCard } from "@/components/project-card";
 
 export default async function Projects() {

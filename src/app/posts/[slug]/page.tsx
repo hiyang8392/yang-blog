@@ -4,7 +4,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import { ChevronLeftIcon } from "lucide-react";
-import { getPost, getAllPublishedSlugs } from "@/lib/data/posts";
+import { getPost, getAllPublishedSlugs } from "@/lib/db/data/posts";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 

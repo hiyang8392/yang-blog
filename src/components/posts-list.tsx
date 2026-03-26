@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { getPostList } from "@/lib/data/posts";
+import type { getPostList } from "@/lib/db/data/posts";
 import { formatDate } from "@/lib/utils";
 import {
   Pagination,

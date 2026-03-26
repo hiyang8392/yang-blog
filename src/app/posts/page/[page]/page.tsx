@@ -1,5 +1,5 @@
 import { notFound, redirect } from "next/navigation";
-import { getPostList, getTotalPages } from "@/lib/data/posts";
+import { getPostList, getTotalPages } from "@/lib/db/data/posts";
 import { PostsList } from "@/components/posts-list";
 
 export async function generateStaticParams() {
