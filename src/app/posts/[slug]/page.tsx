@@ -54,9 +54,14 @@ export default async function PostPage({
       <header className="mb-12">
         <div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
           {post.category && (
-            <Badge variant="secondary" className="font-medium">
-              {post.category.name}
-            </Badge>
+            <Link href={`/category/${post.category.slug}`}>
+              <Badge
+                variant="secondary"
+                className="font-medium transition-colors hover:text-primary"
+              >
+                {post.category.name}
+              </Badge>
+            </Link>
           )}
           {post.publishedAt && (
             <span>{formatDate(post.publishedAt, { withTime: true })}</span>

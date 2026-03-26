@@ -9,7 +9,7 @@ export function ProjectCard({ project }: { project: Project }) {
         href={project.demoUrl || project.githubUrl || ""}
         target="_blank"
         rel="noopener noreferrer"
-        className="mb-2 font-semibold text-foreground"
+        className="mb-2 font-semibold text-lg text-foreground"
       >
         {project.name}
       </a>
