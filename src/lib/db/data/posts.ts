@@ -41,3 +41,11 @@ export async function getTotalPages() {
   const totalCount = await prisma.post.count({ where: { published: true } });
   return Math.ceil(totalCount / POSTS_PER_PAGE);
 }
+
+export async function getLatestPosts(count = 5) {
+  return prisma.post.findMany({
+    where: { published: true },
+    orderBy: { publishedAt: "desc" },
+    take: count,
+  });
+}

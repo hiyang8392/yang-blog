@@ -1,54 +1,16 @@
 import Link from "next/link";
-import { MoveRight } from "lucide-react";
-import { GitHubIcon } from "@/components/icons";
+import { ChevronRightIcon } from "lucide-react";
+import { getLatestPosts } from "@/lib/db/data/posts";
+import { getProjects } from "@/lib/db/data/projects";
+import { formatDate } from "@/lib/utils";
+import { ProjectCard } from "@/components/project-card";
 
-const LATEST_POSTS = [
-  {
-    title: "第三篇第三篇第三篇第三篇第三篇第三篇第三篇第三篇",
-    date: "2026 年 3 月 8 日",
-    slug: "post3",
-  },
-  {
-    title: "第二篇第二篇",
-    date: "2026 年 3 月 1 日",
-    slug: "post2",
-  },
-  {
-    title: "第一篇第一篇第一篇第一篇",
-    date: "2026 年 2 月 20 日",
-    slug: "post1",
-  },
-];
+export default async function Home() {
+  const [latestPosts, projects] = await Promise.all([
+    getLatestPosts(),
+    getProjects(),
+  ]);
 
-const PROJECTS = [
-  {
-    name: "Threads 影片控制器 - Chrome 擴充工具",
-    description: "Threads 影片控制器 - Chrome 擴充工具",
-    url: "https://github.com/hiyang8392/threads-video-controls",
-  },
-  {
-    name: "租屋推播通知",
-    description: "租屋推播通知",
-    url: "https://github.com/hiyang8392/house-notify",
-  },
-  {
-    name: "文字轉 GIF 動態表情符號",
-    description: "文字轉 GIF 動態表情符號",
-    url: "https://github.com/hiyang8392/texttogif",
-  },
-  {
-    name: "音樂播放器",
-    description: "音樂播放器",
-    url: "https://github.com/hiyang8392/react-spotify",
-  },
-  {
-    name: "蕃茄鐘",
-    description: "蕃茄鐘",
-    url: "https://github.com/hiyang8392/react-pomodoro",
-  },
-];
-
-export default function Home() {
   return (
     <div className="py-8 sm:py-12">
       <section className="mb-20">
@@ -69,23 +31,25 @@ export default function Home() {
             className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             查看全部
-            <MoveRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            <ChevronRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
         <div className="flex flex-col divide-y divide-border">
-          {LATEST_POSTS.map((post) => (
-            <Link
+          {latestPosts.map((post) => (
+            <div
               key={post.slug}
-              href={`/posts/${post.slug}`}
-              className="py-4 flex flex-col gap-1 transition-colors first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between"
+              className="py-4 flex flex-col gap-1 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between"
             >
-              <span className="font-medium text-foreground transition-colors group-hover:text-primary">
+              <Link
+                href={`/posts/${post.slug}`}
+                className="font-medium text-foreground transition-colors hover:text-primary line-clamp-1"
+              >
                 {post.title}
-              </span>
+              </Link>
               <span className="shrink-0 text-sm text-muted-foreground">
-                {post.date}
+                {post.publishedAt && formatDate(post.publishedAt)}
               </span>
-            </Link>
+            </div>
           ))}
         </div>
       </section>
@@ -99,31 +63,12 @@ export default function Home() {
             className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             查看全部
-            <MoveRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            <ChevronRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          {PROJECTS.map((project) => (
-            <div
-              key={project.name}
-              className="p-5 rounded-xl border border-border bg-card transition-colors hover:bg-accent"
-            >
-              <h3 className="mb-2 font-semibold text-foreground">
-                {project.name}
-              </h3>
-              <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-                {project.description}
-              </p>
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <GitHubIcon className="size-4" />
-                GitHub
-              </a>
-            </div>
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
       </section>
