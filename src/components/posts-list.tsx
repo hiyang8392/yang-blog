@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { getPostList } from "@/lib/db/data/posts";
-import { formatDate } from "@/lib/utils";
 import {
   Pagination,
   PaginationContent,
@@ -9,7 +8,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Badge } from "@/components/ui/badge";
+import { PostHeader } from "@/components/post-header";
+import { cn } from "@/lib/utils";
 
 const getPageUrl = (page: number) => {
   return page === 1 ? "/posts" : `/posts/page/${page}`;
@@ -33,21 +33,16 @@ export function PostsList({
         {posts.map((post, index) => (
           <article
             key={post.slug}
-            className={`${index !== posts.length - 1 && "border-b border-border"} ${index === 0 && "pt-0"} ${index !== 0 && "pt-8"}`}
+            className={cn(
+              index !== posts.length - 1 && "border-b border-border",
+              index === 0 ? "pt-0" : "pt-8",
+            )}
           >
-            <div className="mb-2 flex items-center gap-3 text-sm text-muted-foreground">
-              {post.category && (
-                <Link href={`/category/${post.category.slug}`}>
-                  <Badge
-                    variant="secondary"
-                    className="font-medium transition-colors hover:text-primary"
-                  >
-                    {post.category.name}
-                  </Badge>
-                </Link>
-              )}
-              {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
-            </div>
+            <PostHeader
+              categorySlug={post.category?.slug}
+              categoryName={post.category?.name}
+              publishedAt={post.publishedAt ?? undefined}
+            />
             <h2 className="mb-4 text-xl sm:text-2xl font-semibold tracking-tight text-foreground line-clamp-1">
               <Link
                 href={`/posts/${post.slug}`}

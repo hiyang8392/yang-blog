@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCategoryPost, getAllCategories } from "@/lib/db/data/category";
-import { formatDate } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
+import { PostHeader } from "@/components/post-header";
+import { cn } from "@/lib/utils";
 
 export async function generateStaticParams() {
   return getAllCategories();
@@ -45,19 +45,16 @@ export default async function CategoryPage({
         {category.posts.map((post, index) => (
           <article
             key={post.slug}
-            className={`${index !== category.posts.length - 1 && "border-b border-border"} ${index === 0 && "pt-0"} ${index !== 0 && "pt-8"}`}
+            className={cn(
+              index !== category.posts.length - 1 && "border-b border-border",
+              index === 0 ? "pt-0" : "pt-8",
+            )}
           >
-            <div className="mb-2 flex items-center gap-3 text-sm text-muted-foreground">
-              <Link href={`/category/${category.slug}`}>
-                <Badge
-                  variant="secondary"
-                  className="font-medium transition-colors hover:text-primary"
-                >
-                  {category.name}
-                </Badge>
-              </Link>
-              {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
-            </div>
+            <PostHeader
+              categorySlug={category.slug}
+              categoryName={category.name}
+              publishedAt={post.publishedAt ?? undefined}
+            />
             <h2 className="mb-4 text-xl sm:text-2xl font-semibold tracking-tight text-foreground line-clamp-1">
               <Link
                 href={`/posts/${post.slug}`}

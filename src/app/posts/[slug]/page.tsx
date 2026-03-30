@@ -5,9 +5,8 @@ import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import { ChevronLeftIcon } from "lucide-react";
 import { getPost, getAllPublishedSlugs } from "@/lib/db/data/posts";
-import { formatDate } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 import { MdxImage } from "@/components/mdx-image";
+import { PostHeader } from "@/components/post-header";
 
 export async function generateStaticParams() {
   return getAllPublishedSlugs();
@@ -53,21 +52,11 @@ export default async function PostPage({
       </Link>
 
       <header className="mb-12">
-        <div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
-          {post.category && (
-            <Link href={`/category/${post.category.slug}`}>
-              <Badge
-                variant="secondary"
-                className="font-medium transition-colors hover:text-primary"
-              >
-                {post.category.name}
-              </Badge>
-            </Link>
-          )}
-          {post.publishedAt && (
-            <span>{formatDate(post.publishedAt, { withTime: true })}</span>
-          )}
-        </div>
+        <PostHeader
+          categorySlug={post.category?.slug}
+          categoryName={post.category?.name}
+          publishedAt={post.publishedAt ?? undefined}
+        />
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
           {post.title}
         </h1>
