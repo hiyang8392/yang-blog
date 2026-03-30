@@ -7,6 +7,7 @@ import { ChevronLeftIcon } from "lucide-react";
 import { getPost, getAllPublishedSlugs } from "@/lib/db/data/posts";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { MdxImage } from "@/components/mdx-image";
 
 export async function generateStaticParams() {
   return getAllPublishedSlugs();
@@ -75,18 +76,11 @@ export default async function PostPage({
       <div className="prose dark:prose-invert max-w-none">
         <MDXRemote
           source={post.content}
+          components={{ img: MdxImage }}
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],
-              rehypePlugins: [
-                [
-                  rehypePrettyCode,
-                  {
-                    theme: { dark: "github-dark", light: "github-light" },
-                    keepBackground: true,
-                  },
-                ],
-              ],
+              rehypePlugins: [[rehypePrettyCode]],
             },
           }}
         />
