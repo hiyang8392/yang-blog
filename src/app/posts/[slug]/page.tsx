@@ -6,6 +6,7 @@ import rehypePrettyCode from "rehype-pretty-code";
 import { ChevronLeftIcon } from "lucide-react";
 import { getPost, getAllPublishedSlugs } from "@/lib/db/data/posts";
 import { MdxImage } from "@/components/mdx-image";
+import { MdxUrl } from "@/components/mdx-url";
 import { PostHeader } from "@/components/post-header";
 
 export async function generateStaticParams() {
@@ -62,10 +63,10 @@ export default async function PostPage({
         </h1>
       </header>
 
-      <div className="prose dark:prose-invert max-w-none">
+      <div className="prose sm:prose-lg dark:prose-invert max-w-none">
         <MDXRemote
           source={post.content}
-          components={{ img: MdxImage }}
+          components={{ img: MdxImage, a: MdxUrl }}
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],
