@@ -9,6 +9,14 @@ export async function getPost(slug: string) {
   });
 }
 
+export async function getAllPosts() {
+  return prisma.post.findMany({
+    where: { published: true },
+    select: { slug: true, publishedAt: true, updatedAt: true },
+    orderBy: { publishedAt: "desc" },
+  });
+}
+
 export async function getAllPublishedSlugs() {
   const posts = await prisma.post.findMany({
     where: { published: true },
