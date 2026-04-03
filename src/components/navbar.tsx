@@ -15,7 +15,7 @@ export function Navbar() {
           href="/"
           className="text-lg font-semibold tracking-tight text-foreground transition-colors hover:text-primary"
         >
-          Hi Yang
+          {process.env.PUBLIC_TITLE}
         </Link>
         <div className="flex items-center gap-1">
           {NAV_LINKS.map((link) => (

@@ -18,7 +18,7 @@ export default async function Home() {
           Hi！ I&apos;m Yang
         </h1>
         <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">
-          你好！
+          寫寫程式、彈彈吉他、過過生活
         </p>
       </section>
       <section className="mb-20">

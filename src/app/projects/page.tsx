@@ -1,5 +1,10 @@
+import { Metadata } from "next";
 import { getProjects } from "@/lib/db/data/projects";
 import { ProjectCard } from "@/components/project-card";
+
+export const metadata: Metadata = {
+  title: "所有專案",
+};
 
 export default async function Projects() {
   const projects = await getProjects();

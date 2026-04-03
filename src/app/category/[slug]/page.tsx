@@ -22,7 +22,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${category.name} - Hi Yang`,
+    title: category.name,
     description: category.description ?? category.name,
   };
 }

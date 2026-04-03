@@ -17,7 +17,7 @@ export function ThemeToggle() {
         size="icon"
         onClick={() => setTheme(THEME_DARK)}
         aria-label="toggle dark theme"
-        className="inline-flex dark:hidden"
+        className="inline-flex dark:hidden cursor-pointer"
       >
         <Sun className="size-5" />
       </Button>
@@ -26,7 +26,7 @@ export function ThemeToggle() {
         size="icon"
         onClick={() => setTheme(THEME_LIGHT)}
         aria-label="toggle light theme"
-        className="hidden dark:inline-flex"
+        className="hidden dark:inline-flex cursor-pointer"
       >
         <Moon className="size-5" />
       </Button>

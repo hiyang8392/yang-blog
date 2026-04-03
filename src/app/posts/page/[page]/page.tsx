@@ -1,6 +1,11 @@
+import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getPostList, getTotalPages } from "@/lib/db/data/posts";
 import { PostsList } from "@/components/posts-list";
+
+export const metadata: Metadata = {
+  title: "所有文章",
+};
 
 export async function generateStaticParams() {
   const totalPages = await getTotalPages();

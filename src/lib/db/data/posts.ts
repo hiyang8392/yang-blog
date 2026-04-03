@@ -57,3 +57,10 @@ export async function getLatestPosts(count = 5) {
     take: count,
   });
 }
+
+export async function getPostTitleExcerpt(slug: string) {
+  return prisma.post.findUnique({
+    where: { slug },
+    select: { title: true, excerpt: true },
+  });
+}
