@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Noto_Sans_TC, Geist_Mono } from "next/font/google";
+import { Noto_Sans_TC } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -8,11 +9,8 @@ import { Footer } from "@/components/footer";
 const NOTO_SANS_TC = Noto_Sans_TC({
   variable: "--font-sans",
   subsets: ["latin"],
-});
-
-const GEIST_MONO = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  preload: false,
 });
 
 const BASE_URL = process.env.PUBLIC_BASE_URL || "http://localhost:3000";
@@ -66,9 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-Hant" suppressHydrationWarning>
-      <body
-        className={`${NOTO_SANS_TC.variable} ${GEIST_MONO.variable} antialiased`}
-      >
+      <body className={cn("font-sans antialiased", NOTO_SANS_TC.variable)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
