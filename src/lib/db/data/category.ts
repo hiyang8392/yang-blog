@@ -3,10 +3,19 @@ import { prisma } from "@/lib/db/prisma";
 export async function getCategoryPost(slug: string) {
   return await prisma.category.findUnique({
     where: { slug },
-    include: {
+    select: {
+      slug: true,
+      name: true,
+      description: true,
       posts: {
         where: { published: true },
         orderBy: { publishedAt: "desc" },
+        select: {
+          slug: true,
+          title: true,
+          excerpt: true,
+          publishedAt: true,
+        },
       },
     },
   });

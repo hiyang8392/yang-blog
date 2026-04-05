@@ -32,7 +32,13 @@ export async function getPostList(page: number) {
     prisma.post.findMany({
       where: { published: true },
       orderBy: { publishedAt: "desc" },
-      include: { category: true },
+      select: {
+        slug: true,
+        title: true,
+        excerpt: true,
+        publishedAt: true,
+        category: { select: { slug: true, name: true } },
+      },
       skip,
       take: POSTS_PER_PAGE,
     }),
@@ -53,6 +59,7 @@ export async function getTotalPages() {
 export async function getLatestPosts(count = 5) {
   return prisma.post.findMany({
     where: { published: true },
+    select: { slug: true, title: true, excerpt: true, publishedAt: true },
     orderBy: { publishedAt: "desc" },
     take: count,
   });
