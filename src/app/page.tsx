@@ -30,7 +30,7 @@ export default async function Home() {
             href="/posts"
             className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            查看全部
+            更多文章
             <ChevronRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>
@@ -38,14 +38,21 @@ export default async function Home() {
           {latestPosts.map((post) => (
             <div
               key={post.slug}
-              className="py-4 flex flex-col gap-1 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between"
+              className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-6"
             >
-              <Link
-                href={`/posts/${post.slug}`}
-                className="font-medium text-foreground transition-colors hover:text-primary line-clamp-1"
-              >
-                {post.title}
-              </Link>
+              <div className="min-w-0 flex flex-col flex-1 gap-1">
+                <Link
+                  href={`/posts/${post.slug}`}
+                  className="text-lg sm:text-xl text-foreground font-medium transition-colors line-clamp-2 sm:line-clamp-1 hover:text-primary"
+                >
+                  {post.title}
+                </Link>
+                {post.excerpt && (
+                  <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2 ">
+                    {post.excerpt}
+                  </p>
+                )}
+              </div>
               <span className="shrink-0 text-sm text-muted-foreground">
                 {post.publishedAt && formatDate(post.publishedAt)}
               </span>
@@ -62,7 +69,7 @@ export default async function Home() {
             href="/projects"
             className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            查看全部
+            更多專案
             <ChevronRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </div>

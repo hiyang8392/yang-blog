@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCategoryPost, getAllCategories } from "@/lib/db/data/category";
 import { PostHeader } from "@/components/post-header";
-import { cn } from "@/lib/utils";
 
 export async function generateStaticParams() {
   return getAllCategories();
@@ -41,27 +40,26 @@ export default async function CategoryPage({
       <h1 className="mb-12 text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
         {category.name}
       </h1>
-      <div className="flex flex-col">
-        {category.posts.map((post, index) => (
-          <article
-            key={post.slug}
-            className={cn(
-              index !== category.posts.length - 1 && "border-b border-border",
-              index === 0 ? "pt-0" : "pt-8",
-            )}
-          >
+      <div className="flex flex-col divide-y divide-border">
+        {category.posts.map((post) => (
+          <article key={post.slug} className="py-4 first:pt-0 last:pb-0">
             <PostHeader
               categorySlug={category.slug}
               categoryName={category.name}
               publishedAt={post.publishedAt ?? undefined}
             />
-            <h2 className="mb-4 text-xl sm:text-2xl font-semibold tracking-tight text-foreground line-clamp-1">
+            <h2 className="flex flex-col flex-1 gap-1">
               <Link
                 href={`/posts/${post.slug}`}
-                className="transition-colors hover:text-primary"
+                className="text-lg sm:text-xl font-medium tracking-tight text-foreground transition-colors hover:text-primary line-clamp-2"
               >
                 {post.title}
               </Link>
+              {post.excerpt && (
+                <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2">
+                  {post.excerpt}
+                </p>
+              )}
             </h2>
           </article>
         ))}

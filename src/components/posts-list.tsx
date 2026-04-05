@@ -9,7 +9,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { PostHeader } from "@/components/post-header";
-import { cn } from "@/lib/utils";
 
 const getPageUrl = (page: number) => {
   return page === 1 ? "/posts" : `/posts/page/${page}`;
@@ -29,27 +28,26 @@ export function PostsList({
       <h1 className="mb-12 text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
         所有文章
       </h1>
-      <div className="flex flex-col">
-        {posts.map((post, index) => (
-          <article
-            key={post.slug}
-            className={cn(
-              index !== posts.length - 1 && "border-b border-border",
-              index === 0 ? "pt-0" : "pt-8",
-            )}
-          >
+      <div className="flex flex-col divide-y divide-border">
+        {posts.map((post) => (
+          <article key={post.slug} className="py-4 first:pt-0 last:pb-0">
             <PostHeader
               categorySlug={post.category?.slug}
               categoryName={post.category?.name}
               publishedAt={post.publishedAt ?? undefined}
             />
-            <h2 className="mb-4 text-xl sm:text-2xl font-semibold tracking-tight text-foreground line-clamp-1">
+            <h2 className="flex flex-col flex-1 gap-1">
               <Link
                 href={`/posts/${post.slug}`}
-                className="transition-colors hover:text-primary"
+                className="text-lg sm:text-xl font-medium tracking-tight text-foreground transition-colors hover:text-primary line-clamp-2"
               >
                 {post.title}
               </Link>
+              {post.excerpt && (
+                <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2">
+                  {post.excerpt}
+                </p>
+              )}
             </h2>
           </article>
         ))}

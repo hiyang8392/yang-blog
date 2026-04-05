@@ -12,7 +12,7 @@ export function PostHeader({
   publishedAt?: Date;
 }) {
   return (
-    <div className="mb-4 flex items-center gap-3 text-sm text-muted-foreground">
+    <div className="mb-2 flex items-center gap-3 text-sm text-muted-foreground">
       {categorySlug && categoryName && (
         <Link href={`/category/${categorySlug}`}>
           <Badge
