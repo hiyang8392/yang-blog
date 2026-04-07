@@ -4,7 +4,7 @@ import path from "path";
 import matter from "gray-matter";
 import { prisma } from "@/lib/db/prisma";
 
-const CONTENT_DIR = path.join(process.cwd(), "src", "_content");
+const CONTENT_DIR = path.join(process.cwd(), "content");
 
 const getMarkdownPath = (input: string): string => {
   const trimmed = input.trim().replace(/^\.\//, "");
