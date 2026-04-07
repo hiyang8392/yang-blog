@@ -1,13 +1,14 @@
+import { cache } from "react";
 import { prisma } from "@/lib/db/prisma";
 
 const POSTS_PER_PAGE = 10;
 
-export async function getPost(slug: string) {
+export const getPost = cache(async (slug: string) => {
   return prisma.post.findUnique({
     where: { slug, published: true },
     include: { category: true, tags: true },
   });
-}
+});
 
 export async function getAllPosts() {
   return prisma.post.findMany({

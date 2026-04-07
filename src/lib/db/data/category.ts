@@ -1,6 +1,7 @@
+import { cache } from "react";
 import { prisma } from "@/lib/db/prisma";
 
-export async function getCategoryPost(slug: string) {
+export const getCategoryPost = cache(async (slug: string) => {
   return await prisma.category.findUnique({
     where: { slug },
     select: {
@@ -19,7 +20,7 @@ export async function getCategoryPost(slug: string) {
       },
     },
   });
-}
+});
 
 export async function getAllCategories() {
   const categories = await prisma.category.findMany({
