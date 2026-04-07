@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
   const expected = process.env.REVALIDATE_SECRET;
   if (!expected) {
     return NextResponse.json(
-      { ok: false, error: "REVALIDATE_SECRET is not found." },
+      { ok: false, error: "REVALIDATE_SECRET is not set." },
       { status: 500 },
     );
   }
