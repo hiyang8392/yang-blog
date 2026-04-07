@@ -69,13 +69,13 @@ export default async function PostPage({
         返回文章列表
       </Link>
 
-      <header className="mb-12">
+      <header className="mb-10">
         <PostHeader
           categorySlug={post.category?.slug}
           categoryName={post.category?.name}
           publishedAt={post.publishedAt ?? undefined}
         />
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+        <h1 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
           {post.title}
         </h1>
       </header>
