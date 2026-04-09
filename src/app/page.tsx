@@ -48,7 +48,7 @@ export default async function Home() {
                   {post.title}
                 </Link>
                 {post.excerpt && (
-                  <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2 ">
+                  <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2">
                     {post.excerpt}
                   </p>
                 )}

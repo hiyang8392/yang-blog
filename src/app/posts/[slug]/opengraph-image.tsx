@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getPostTitleExcerpt } from "@/lib/db/data/posts";
+export { generateStaticParams } from "./page";
 
 export const alt = "post-og-image";
 export const size = { width: 1200, height: 630 };
