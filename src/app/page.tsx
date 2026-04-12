@@ -1,65 +1,84 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ChevronRightIcon } from "lucide-react";
+import { getLatestPosts } from "@/lib/db/data/posts";
+import { getProjects } from "@/lib/db/data/projects";
+import { formatDate } from "@/lib/utils";
+import { ProjectCard } from "@/components/project-card";
 
-export default function Home() {
+export default async function Home() {
+  const [latestPosts, projects] = await Promise.all([
+    getLatestPosts(),
+    getProjects(),
+  ]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="py-8 sm:py-12">
+      <section className="mb-20">
+        <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          Hi！ I&apos;m Yang
+        </h1>
+        <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">
+          寫寫程式、彈彈吉他、過過生活
+        </p>
+      </section>
+      <section className="mb-20">
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+            最新文章
+          </h2>
+          <Link
+            href="/posts"
+            className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            更多文章
+            <ChevronRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </div>
-      </main>
+        <div className="flex flex-col divide-y divide-border">
+          {latestPosts.map((post) => (
+            <div
+              key={post.slug}
+              className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-6"
+            >
+              <div className="min-w-0 flex flex-col flex-1 gap-1">
+                <Link
+                  href={`/posts/${post.slug}`}
+                  className="text-lg sm:text-xl text-foreground font-medium transition-colors line-clamp-2 sm:line-clamp-1 hover:text-primary"
+                >
+                  {post.title}
+                </Link>
+                {post.excerpt && (
+                  <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                )}
+              </div>
+              <span className="shrink-0 text-sm text-muted-foreground">
+                {post.publishedAt && formatDate(post.publishedAt)}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section>
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+            專案
+          </h2>
+          <Link
+            href="/projects"
+            className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            更多專案
+            <ChevronRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
