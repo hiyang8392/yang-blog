@@ -9,6 +9,7 @@ const dateFormatter = new Intl.DateTimeFormat("zh-TW", {
   year: "numeric",
   month: "long",
   day: "numeric",
+  timeZone: "Asia/Taipei",
 });
 
 const dateTimeFormatter = new Intl.DateTimeFormat("zh-TW", {
@@ -18,6 +19,7 @@ const dateTimeFormatter = new Intl.DateTimeFormat("zh-TW", {
   hour: "2-digit",
   minute: "2-digit",
   hourCycle: "h24",
+  timeZone: "Asia/Taipei",
 });
 
 export function formatDate(date: Date, options?: { withTime?: boolean }) {
