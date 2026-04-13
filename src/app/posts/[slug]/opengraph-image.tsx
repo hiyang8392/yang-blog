@@ -18,7 +18,7 @@ export default async function Image({
     return new Response("文章不存在", { status: 404 });
   }
 
-  const text = [process.env.PUBLIC_TITLE, post.title, post.excerpt]
+  const text = [process.env.NEXT_PUBLIC_TITLE, post.title, post.excerpt]
     .filter(Boolean)
     .join("");
   const uniqueChars = [...new Set(text)].join("");
@@ -57,7 +57,7 @@ export default async function Image({
         fontWeight: 700,
       }}
     >
-      <div>{process.env.PUBLIC_TITLE}</div>
+      <div>{process.env.NEXT_PUBLIC_TITLE}</div>
       <div style={{ marginTop: "40px", fontSize: "64px" }}>{post.title}</div>
       <div style={{ marginTop: "20px", fontSize: "28px", color: "#71717b" }}>
         {post.excerpt}

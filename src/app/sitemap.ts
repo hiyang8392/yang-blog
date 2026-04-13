@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { getAllPosts, getTotalPages } from "@/lib/db/data/posts";
 import { getAllCategories } from "@/lib/db/data/category";
 
-const BASE_URL = process.env.PUBLIC_BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [posts, totalPages, categories] = await Promise.all([

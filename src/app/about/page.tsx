@@ -13,11 +13,11 @@ export default function About() {
       </h1>
       <div className="mb-10 text-lg leading-relaxed text-muted-foreground">
         <p className="mb-5">
-          嗨，我是 Yang。打滾了幾年的前端工程師，目前主要專注於 React 與
-          Next.js 生態系的開發。
+          嗨，我是 Yang。打滾了幾年的前端工程師，目前主要專注於 React 與 Next.js
+          生態系的開發。
         </p>
         <p className="mb-5">
-          本站主要會紀錄一些自己的學習筆記，以及一些技術內容分享，還有些日常雜談。期許自己養成知識輸出的習慣，如果能因此幫助到別人那就更好了。
+          本站主要紀錄了我的學習筆記、技術內容分享、還有些日常雜談。期許自己養成知識輸出的習慣，如果能因此幫助到別人那就更好了。
         </p>
         <p className="mb-5">
           最近的興趣是學習電吉他，未來也會在這裡分享我的彈奏紀錄。
