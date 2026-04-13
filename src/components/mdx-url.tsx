@@ -36,7 +36,7 @@ export function MdxUrl({
   const isInternalUrl =
     href.startsWith("/") ||
     href.startsWith("#") ||
-    href.includes(process.env.PUBLIC_BASE_URL || "");
+    href.includes(process.env.NEXT_PUBLIC_BASE_URL || "");
   if (isInternalUrl) {
     return <Link href={href}>{children}</Link>;
   }

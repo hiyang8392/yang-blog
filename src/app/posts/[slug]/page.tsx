@@ -39,7 +39,7 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.createdAt.toISOString(),
       modifiedTime: post.updatedAt.toISOString(),
-      authors: [process.env.PUBLIC_TITLE || "Hi Yang"],
+      authors: [process.env.NEXT_PUBLIC_TITLE || "Hi Yang"],
     },
     twitter: {
       card: "summary_large_image",

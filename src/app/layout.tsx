@@ -14,13 +14,13 @@ const NOTO_SANS_TC = Noto_Sans_TC({
   preload: false,
 });
 
-const BASE_URL = process.env.PUBLIC_BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    template: `%s | ${process.env.PUBLIC_TITLE}`,
-    default: process.env.PUBLIC_TITLE || "Hi Yang",
+    template: `%s | ${process.env.NEXT_PUBLIC_TITLE}`,
+    default: process.env.NEXT_PUBLIC_TITLE || "Hi Yang",
   },
   description:
     "一名打滾了幾年的前端工程師，這裡是我紀錄一些自己的學習筆記，以及一些技術內容分享，還有些日常雜談的地方。",
@@ -38,17 +38,17 @@ export const metadata: Metadata = {
     "Blog",
   ],
   openGraph: {
-    title: process.env.PUBLIC_TITLE || "Hi Yang",
+    title: process.env.NEXT_PUBLIC_TITLE || "Hi Yang",
     description:
       "一名打滾了幾年的前端工程師，這裡是我紀錄一些自己的學習筆記，以及一些技術內容分享，還有些日常雜談的地方。",
     url: BASE_URL,
-    siteName: process.env.PUBLIC_TITLE || "Hi Yang",
+    siteName: process.env.NEXT_PUBLIC_TITLE || "Hi Yang",
     locale: "zh_TW",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: process.env.PUBLIC_TITLE || "Hi Yang",
+    title: process.env.NEXT_PUBLIC_TITLE || "Hi Yang",
     description:
       "一名打滾了幾年的前端工程師，這裡是我紀錄一些自己的學習筆記，以及一些技術內容分享，還有些日常雜談的地方。",
     creator: "@yang78392",
