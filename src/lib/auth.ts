@@ -26,7 +26,7 @@ export function isAuthError(
 ): NextResponse | null {
   if (!envKey) {
     return NextResponse.json(
-      { ok: false, error: `${envKey} is not set.` },
+      { ok: false, error: "envKey is not set." },
       { status: 500 },
     );
   }

@@ -18,7 +18,7 @@ const dateTimeFormatter = new Intl.DateTimeFormat("zh-TW", {
   day: "numeric",
   hour: "2-digit",
   minute: "2-digit",
-  hourCycle: "h24",
+  hourCycle: "h23",
   timeZone: "Asia/Taipei",
 });
 

@@ -36,7 +36,7 @@ export function PostsList({
               categoryName={post.category?.name}
               publishedAt={post.publishedAt ?? undefined}
             />
-            <h2 className="flex flex-col flex-1 gap-1">
+            <h2 className="flex flex-col gap-1">
               <Link
                 href={`/posts/${post.slug}`}
                 className="text-lg sm:text-xl font-medium tracking-tight text-foreground transition-colors hover:text-primary line-clamp-2"
