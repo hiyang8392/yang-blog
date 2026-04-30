@@ -31,7 +31,7 @@ export default async function Home() {
             className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             更多文章
-            <ChevronRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+            <ChevronRightIcon className="size-4 transition-transform" />
           </Link>
         </div>
         <div className="flex flex-col divide-y divide-border">
@@ -70,7 +70,7 @@ export default async function Home() {
             className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             更多專案
-            <ChevronRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+            <ChevronRightIcon className="size-4 transition-transform" />
           </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
