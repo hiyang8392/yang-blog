@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db/prisma";
 import { isAuthError } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
-  const key = process.env.CRON_WAKE_SECRET || "";
+  const key = process.env.CRON_SECRET || "";
   const error = isAuthError(request, key);
   if (error) {
     return error;
@@ -20,7 +20,5 @@ export async function GET(request: NextRequest) {
       { ok: false, error: String(error) },
       { status: 500 },
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
