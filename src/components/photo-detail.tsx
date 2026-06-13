@@ -79,7 +79,7 @@ export function PhotoDetail({
         </Link>
       )}
 
-      <p className="text-base leading-relaxed text-foreground">
+      <p className="leading-relaxed text-lg text-muted-foreground">
         {photo.caption}
       </p>
     </div>
