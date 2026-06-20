@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getPhoto } from "@/lib/db/data/photos";
+import { getPhotoWithNavigation } from "@/lib/db/data/photos";
 import { PhotoDetail } from "@/components/photo-detail";
 import { PhotoModal } from "@/components/photo-modal";
 
@@ -9,7 +9,7 @@ export default async function PhotoModalPage({
   params: Promise<{ albumSlug: string; photoId: string }>;
 }) {
   const { albumSlug, photoId } = await params;
-  const result = await getPhoto(albumSlug, photoId);
+  const result = await getPhotoWithNavigation(albumSlug, photoId);
 
   if (!result) {
     notFound();
@@ -29,7 +29,7 @@ export default async function PhotoModalPage({
       nextHref={nextHref}
     >
       <PhotoDetail
-        album={result.album}
+        albumTitle={result.album.title}
         photo={result.photo}
         prevHref={prevHref}
         nextHref={nextHref}

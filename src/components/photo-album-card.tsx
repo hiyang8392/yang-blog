@@ -10,7 +10,7 @@ export function PhotoAlbumCard({ album }: { album: AlbumSummary }) {
     >
       <div className="bg-muted relative aspect-4/3 overflow-hidden">
         <Image
-          src={album.coverImage}
+          src={album.coverImage ?? album.photos[0]?.src ?? ""}
           alt={`${album.title} cover image`}
           fill
           sizes="(min-width: 640px) 384px, 100vw"

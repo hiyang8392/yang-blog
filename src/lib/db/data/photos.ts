@@ -1,28 +1,8 @@
 import { cache } from "react";
 import { prisma } from "@/lib/db/prisma";
 
-type PhotoRecord = {
-  id: string;
-  src: string;
-  alt: string;
-  caption: string | null;
-  width: number;
-  height: number;
-};
-
-function mapPhoto(photo: PhotoRecord) {
-  return {
-    id: photo.id,
-    src: photo.src,
-    alt: photo.alt,
-    caption: photo.caption ?? "",
-    width: photo.width,
-    height: photo.height,
-  };
-}
-
 export async function getAlbums() {
-  const albums = await prisma.album.findMany({
+  return await prisma.album.findMany({
     where: { published: true },
     orderBy: { createdAt: "desc" },
     select: {
@@ -38,14 +18,6 @@ export async function getAlbums() {
       },
     },
   });
-
-  return albums.map((album) => ({
-    slug: album.slug,
-    title: album.title,
-    description: album.description ?? "",
-    coverImage: album.coverImage ?? album.photos[0]?.src ?? "",
-    photoCount: album._count.photos,
-  }));
 }
 
 export const getAlbum = cache(async (slug: string) => {
@@ -60,18 +32,31 @@ export const getAlbum = cache(async (slug: string) => {
     return null;
   }
 
-  const photos = album.photos.map(mapPhoto);
-
   return {
     slug: album.slug,
     title: album.title,
     description: album.description ?? "",
-    coverImage: album.coverImage ?? photos[0]?.src ?? "",
-    photos,
+    coverImage: album.coverImage ?? album.photos[0]?.src ?? "",
+    photos: album.photos,
   };
 });
 
 export const getPhoto = cache(
+  async (albumSlug: string, photoId: string) => {
+    const photo = await prisma.photo.findFirst({
+      where: { id: photoId, album: { slug: albumSlug, published: true } },
+      include: { album: { select: { title: true } } },
+    });
+
+    if (!photo) {
+      return null;
+    }
+
+    return photo;
+  },
+);
+
+export const getPhotoWithNavigation = cache(
   async (albumSlug: string, photoId: string) => {
     const album = await getAlbum(albumSlug);
 
@@ -95,12 +80,10 @@ export const getPhoto = cache(
 );
 
 export async function getAlbumSlugs() {
-  const albums = await prisma.album.findMany({
+  return await prisma.album.findMany({
     where: { published: true },
     select: { slug: true },
   });
-
-  return albums.map((album) => ({ albumSlug: album.slug }));
 }
 
 export async function getPhotoParams() {

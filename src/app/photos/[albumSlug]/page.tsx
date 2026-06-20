@@ -6,7 +6,8 @@ import { getAlbum, getAlbumSlugs } from "@/lib/db/data/photos";
 import { PhotoGrid } from "@/components/photo-grid";
 
 export async function generateStaticParams() {
-  return getAlbumSlugs();
+  const albumSlugs = await getAlbumSlugs();
+  return albumSlugs.map((albumSlug) => ({ albumSlug: albumSlug.slug }));
 }
 
 export async function generateMetadata({

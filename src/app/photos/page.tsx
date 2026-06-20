@@ -17,7 +17,7 @@ export default async function PhotosPage() {
       <div className="grid gap-4 sm:grid-cols-2">
         {albums.map(
           (album) =>
-            album.photoCount > 0 && (
+            album._count.photos > 0 && (
               <PhotoAlbumCard key={album.slug} album={album} />
             ),
         )}

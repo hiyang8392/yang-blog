@@ -13,19 +13,19 @@ export async function generateMetadata({
   params: Promise<{ albumSlug: string; photoId: string }>;
 }): Promise<Metadata> {
   const { albumSlug, photoId } = await params;
-  const result = await getPhoto(albumSlug, photoId);
+  const photo = await getPhoto(albumSlug, photoId);
 
-  if (!result) {
+  if (!photo) {
     return {
       title: "照片不存在",
     };
   }
 
   return {
-    title: `${result.album.title} - ${result.photo.alt}`,
-    description: result.photo.caption,
+    title: `${photo.album.title} - ${photo.alt}`,
+    description: photo.caption,
     openGraph: {
-      images: [result.photo.src],
+      images: [photo.src],
     },
   };
 }
@@ -36,18 +36,18 @@ export default async function PhotoPage({
   params: Promise<{ albumSlug: string; photoId: string }>;
 }) {
   const { albumSlug, photoId } = await params;
-  const result = await getPhoto(albumSlug, photoId);
+  const photo = await getPhoto(albumSlug, photoId);
 
-  if (!result) {
+  if (!photo) {
     notFound();
   }
 
   return (
     <article className="py-8 sm:py-12">
       <PhotoDetail
-        album={result.album}
-        photo={result.photo}
-        backHref={`/photos/${result.album.slug}`}
+        albumTitle={photo.album.title}
+        photo={photo}
+        backHref={`/photos/${albumSlug}`}
       />
     </article>
   );

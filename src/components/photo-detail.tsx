@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import type { Album, AlbumPhoto } from "@/lib/db/data/photos";
+import type { AlbumPhoto } from "@/lib/db/data/photos";
 import { cn } from "@/lib/utils";
 
 export function PhotoDetail({
-  album,
+  albumTitle,
   photo,
   backHref,
   prevHref,
@@ -13,7 +13,7 @@ export function PhotoDetail({
   replaceNav = false,
   className,
 }: {
-  album: Album;
+  albumTitle: string;
   photo: AlbumPhoto;
   backHref?: string;
   prevHref?: string;
@@ -32,7 +32,7 @@ export function PhotoDetail({
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ChevronLeftIcon className="size-4" />
-          返回 {album.title}
+          返回 {albumTitle}
         </Link>
       )}
 
