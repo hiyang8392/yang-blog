@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPhoto, getPhotoParams } from "@/lib/db/data/photos";
-import { PhotoDetail } from "@/components/photo-detail";
+import { PhotoDetail } from "@/app/photos/_components/photo-detail";
 
 export async function generateStaticParams() {
   return getPhotoParams();

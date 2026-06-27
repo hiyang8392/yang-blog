@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getPostList } from "@/lib/db/data/posts";
-import { PostsList } from "@/components/posts-list";
+import { PostsList } from "@/app/posts/_components/posts-list";
 
 export const metadata: Metadata = {
   title: "所有文章",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getAlbums } from "@/lib/db/data/photos";
-import { PhotoAlbumCard } from "@/components/photo-album-card";
+import { PhotoAlbumCard } from "@/app/photos/_components/photo-album-card";
 
 export const metadata: Metadata = {
   title: "所有相簿",

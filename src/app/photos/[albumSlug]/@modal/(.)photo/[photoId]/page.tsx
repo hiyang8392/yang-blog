@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getPhotoWithNavigation } from "@/lib/db/data/photos";
-import { PhotoDetail } from "@/components/photo-detail";
-import { PhotoModal } from "@/components/photo-modal";
+import { PhotoDetail } from "@/app/photos/_components/photo-detail";
+import { PhotoModal } from "@/app/photos/_components/photo-modal";
 
 export default async function PhotoModalPage({
   params,

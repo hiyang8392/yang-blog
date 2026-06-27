@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeftIcon } from "lucide-react";
 import { getAlbum, getAlbumSlugs } from "@/lib/db/data/photos";
-import { PhotoGrid } from "@/components/photo-grid";
+import { PhotoGrid } from "@/app/photos/_components/photo-grid";
 
 export async function generateStaticParams() {
   const albumSlugs = await getAlbumSlugs();
