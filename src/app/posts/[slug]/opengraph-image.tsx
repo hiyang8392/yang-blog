@@ -23,7 +23,7 @@ export default async function Image({
     .join("");
   const uniqueChars = [...new Set(text)].join("");
 
-  const fontData = await fetch(
+  const fontCssResponse = await fetch(
     `https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700&text=${encodeURIComponent(uniqueChars)}`,
     {
       headers: {
@@ -31,16 +31,14 @@ export default async function Image({
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)",
       },
     },
-  )
-    .then((res) => res.text())
-    .then((css) => {
-      const match = css.match(/src: url\((.+?)\) format/);
-      if (!match) {
-        throw new Error("font url not found");
-      }
-      return fetch(match[1]);
-    })
-    .then((res) => res.arrayBuffer());
+  );
+  const font = await fontCssResponse.text();
+  const match = font.match(/src: url\((.+?)\) format/);
+  if (!match) {
+    throw new Error("font url not found");
+  }
+  const fontResponse = await fetch(match[1]);
+  const fontData = await fontResponse.arrayBuffer();
 
   return new ImageResponse(
     <div

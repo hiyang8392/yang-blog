@@ -5,8 +5,8 @@ import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import { ChevronLeftIcon } from "lucide-react";
 import { getPost, getAllPublishedSlugs } from "@/lib/db/data/posts";
-import { MdxImage } from "@/components/mdx-image";
-import { MdxUrl } from "@/components/mdx-url";
+import { MdxImage } from "@/app/posts/_components/mdx-image";
+import { MdxUrl } from "@/app/posts/_components/mdx-url";
 import { PostHeader } from "@/components/post-header";
 
 export async function generateStaticParams() {
@@ -57,7 +57,9 @@ export default async function PostPage({
   const { slug } = await params;
   const post = await getPost(slug);
 
-  if (!post) notFound();
+  if (!post) {
+    notFound();
+  }
 
   return (
     <article className="py-8 sm:py-12">
