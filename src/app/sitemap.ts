@@ -1,18 +1,17 @@
 import { MetadataRoute } from "next";
 import { getAllPosts, getTotalPages } from "@/lib/db/data/posts";
 import { getAllCategories } from "@/lib/db/data/category";
-import { getAlbums, getPhotoParams } from "@/lib/db/data/photos";
+import { getAlbums } from "@/lib/db/data/photos";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [posts, totalPages, categories, albums, photoParams] =
+  const [posts, totalPages, categories, albums] =
     await Promise.all([
       getAllPosts(),
       getTotalPages(),
       getAllCategories(),
       getAlbums(),
-      getPhotoParams(),
     ]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -79,19 +78,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  const photoRoutes: MetadataRoute.Sitemap = photoParams.map((photo) => ({
-    url: `${BASE_URL}/photos/${photo.albumSlug}/photo/${photo.photoId}`,
-    lastModified: new Date(),
-    changeFrequency: "daily",
-    priority: 0.6,
-  }));
-
   return [
     ...staticRoutes,
     ...paginationRoutes,
     ...postRoutes,
     ...categoryRoutes,
     ...albumRoutes,
-    ...photoRoutes,
   ];
 }

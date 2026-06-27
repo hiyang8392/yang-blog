@@ -22,7 +22,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${photo.album.title} - ${photo.alt}`,
+    title: photo.album.title,
     description: photo.caption,
     openGraph: {
       images: [photo.src],
