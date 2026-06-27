@@ -33,7 +33,9 @@ export default async function CategoryPage({
   const { slug } = await params;
   const category = await getCategoryPost(slug);
 
-  if (!category) notFound();
+  if (!category) {
+    notFound();
+  }
 
   return (
     <div className="py-8 sm:py-12 flex flex-1 flex-col">

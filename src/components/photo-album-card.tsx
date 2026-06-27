@@ -24,7 +24,7 @@ export function PhotoAlbumCard({ album }: { album: AlbumSummary }) {
             {album.title}
           </h2>
         </div>
-        <p className="text-sm leading-relaxed text-muted-foreground">
+        <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
           {album.description}
         </p>
       </div>

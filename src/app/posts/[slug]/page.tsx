@@ -57,7 +57,9 @@ export default async function PostPage({
   const { slug } = await params;
   const post = await getPost(slug);
 
-  if (!post) notFound();
+  if (!post) {
+    notFound();
+  }
 
   return (
     <article className="py-8 sm:py-12">
