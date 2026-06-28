@@ -67,7 +67,7 @@ export function PhotoModal({
       </Button>
 
       <div
-        className="mx-auto flex min-h-full w-full max-w-3xl flex-col justify-center"
+        className="mx-auto flex min-h-full w-full max-w-7xl flex-col justify-center"
         onClick={(event) => event.stopPropagation()}
       >
         {children}
