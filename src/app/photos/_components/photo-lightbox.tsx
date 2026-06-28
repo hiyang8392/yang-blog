@@ -94,7 +94,7 @@ export function PhotoLightbox({
             event.stopPropagation();
             goPrev();
           }}
-          className="fixed left-2 top-1/2 z-10 inline-flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm transition hover:bg-background sm:left-4 sm:size-12"
+          className="fixed bottom-28 left-2 z-10 inline-flex size-10 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm transition hover:bg-background sm:bottom-auto sm:left-4 sm:top-1/2 sm:size-12 sm:-translate-y-1/2"
         >
           <ChevronLeftIcon className="size-5 sm:size-6" />
         </button>
@@ -108,7 +108,7 @@ export function PhotoLightbox({
             event.stopPropagation();
             goNext();
           }}
-          className="fixed right-2 top-1/2 z-10 inline-flex size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm transition hover:bg-background sm:right-4 sm:size-12"
+          className="fixed bottom-28 right-2 z-10 inline-flex size-10 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm transition hover:bg-background sm:bottom-auto sm:right-4 sm:top-1/2 sm:size-12 sm:-translate-y-1/2"
         >
           <ChevronRightIcon className="size-5 sm:size-6" />
         </button>
