@@ -12,7 +12,7 @@
 
 文章內容以 `.md` 格式，存放於 Supabase(PostgreSQL) 資料庫，透過 build 階段時預先渲染成靜態頁面，搭配 `revalidatePath` 做快取更新。
 
-除了文章之外，還包含相片頁，相片頁使用 Next.js 平行路由方式實作。
+相片頁的部分，跟文章一樣預先渲染成靜態頁面，實作相簿內瀏覽相片功能 lightbox，相片存放在 Supabase Storage。
 
 ## 架構
 
@@ -23,7 +23,7 @@
 * `/posts/[slug]` 文章頁
 * `/category/[slug]` 分類文章列表
 * `/photos`、`/photos/[albumSlug]` 相簿列表 / 相簿頁
-* `/photos/[albumSlug]/photo/[photoId]` 單張相片（攔截路由 Modal）
+* `/photos/[albumSlug]/photo/[photoId]` 相片頁（相簿內點開為 lightbox 效果）
 * `/projects` 作品集
 * `/about` 關於我
 
@@ -48,12 +48,11 @@
 * rehype-pretty-code：程式碼語法的樣式
 * remark-gfm：更多 Markdown 語法樣式
 
-### 3. 相片頁（攔截路由 Modal）
+### 3. 相片頁實作
 
-單張相片使用 Next.js 的平行路由實作 Modal：
-
-* 從相簿頁點進相片時，`@modal/(.)photo/[photoId]` 會攔截路由，以 Modal 形式蓋在相簿頁上，並支援點擊上一張 / 下一張相片
-* 直接進入相片連結或是重新整理 `/photos/[albumSlug]/photo/[photoId]` 時，則是進入一般相片頁面
+* 從相簿頁點進相片時，以 `_components/photo-lightbox` 蓋在相簿頁上
+* 上一張 / 下一張用 `history.pushState` / `replaceState` 同步網址，不會向 server 重新 fetch
+* 直接開啟或重新整理 `/photos/[albumSlug]/photo/[photoId]` 時，則走 `photo/[photoId]/page.tsx` 的 SSG 全頁
 
 ### 4. 動態 OG Image
 
