@@ -64,14 +64,14 @@ export function PhotoLightbox({
         type="button"
         variant="ghost"
         size="icon-lg"
-        className="fixed right-4 top-4 z-10 rounded-full bg-background/80 shadow-sm cursor-pointer"
+        className="fixed right-4 top-4 z-10 rounded-full bg-background/80 shadow-sm cursor-pointer size-5 sm:size-12 opacity-60 sm:opacity-100"
         onClick={(event) => {
           event.stopPropagation();
           onClose();
         }}
         aria-label="close photo"
       >
-        <XIcon className="size-5" />
+        <XIcon className="size-4" />
       </Button>
 
       <div
@@ -94,9 +94,9 @@ export function PhotoLightbox({
             event.stopPropagation();
             goPrev();
           }}
-          className="fixed bottom-28 left-2 z-10 inline-flex size-10 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm transition hover:bg-background sm:bottom-auto sm:left-4 sm:top-1/2 sm:size-12 sm:-translate-y-1/2"
+          className="fixed left-6 top-1/2 z-10 inline-flex size-4 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition hover:bg-background/60 hover:text-foreground/90 sm:left-4 sm:size-12 opacity-60 sm:opacity-100"
         >
-          <ChevronLeftIcon className="size-5 sm:size-6" />
+          <ChevronLeftIcon className="size-4 sm:size-5" />
         </button>
       )}
 
@@ -108,9 +108,9 @@ export function PhotoLightbox({
             event.stopPropagation();
             goNext();
           }}
-          className="fixed bottom-28 right-2 z-10 inline-flex size-10 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm transition hover:bg-background sm:bottom-auto sm:right-4 sm:top-1/2 sm:size-12 sm:-translate-y-1/2"
+          className="fixed right-6 top-1/2 z-10 inline-flex size-4 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition hover:bg-background/60 hover:text-foreground/90 sm:right-4 sm:size-12 opacity-60 sm:opacity-100"
         >
-          <ChevronRightIcon className="size-5 sm:size-6" />
+          <ChevronRightIcon className="size-4 sm:size-5" />
         </button>
       )}
     </div>
