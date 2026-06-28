@@ -67,17 +67,19 @@ export function Navbar() {
                 <Menu className="size-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72 gap-0 sm:max-w-xs">
+            <SheetContent side="right" className="w-80 gap-0 sm:max-w-sm">
               <SheetHeader>
-                <SheetTitle>{process.env.NEXT_PUBLIC_TITLE}</SheetTitle>
+                <SheetTitle className="text-xl">
+                  {process.env.NEXT_PUBLIC_TITLE}
+                </SheetTitle>
               </SheetHeader>
-              <div className="flex flex-col gap-1 px-2 pb-4">
+              <div className="flex flex-col gap-1.5 px-3 pb-4">
                 {NAV_LINKS.map((link) => (
                   <SheetClose asChild key={link.href}>
                     <Link
                       href={link.href}
                       className={cn(
-                        "px-3 py-2.5 rounded-lg text-sm transition-colors",
+                        "px-4 py-3 rounded-lg text-lg font-medium transition-colors",
                         isLinkActive(pathname, link.href)
                           ? "bg-accent text-foreground"
                           : "text-muted-foreground hover:bg-accent hover:text-foreground",

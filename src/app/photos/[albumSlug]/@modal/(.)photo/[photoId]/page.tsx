@@ -34,7 +34,8 @@ export default async function PhotoModalPage({
         prevHref={prevHref}
         nextHref={nextHref}
         replaceNav
-        className="py-12 sm:py-10"
+        maxImageHeightVh={85}
+        className="pb-12 sm:pb-10"
       />
     </PhotoModal>
   );

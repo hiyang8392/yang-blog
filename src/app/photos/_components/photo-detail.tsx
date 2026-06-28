@@ -11,6 +11,7 @@ export function PhotoDetail({
   prevHref,
   nextHref,
   replaceNav = false,
+  maxImageHeightVh = 72,
   className,
 }: {
   albumTitle: string;
@@ -19,10 +20,12 @@ export function PhotoDetail({
   prevHref?: string;
   nextHref?: string;
   replaceNav?: boolean;
+  maxImageHeightVh?: number;
   className?: string;
 }) {
   const aspectRatio = photo.width / photo.height;
-  const maxViewportWidth = Math.round(aspectRatio * 72 * 1000) / 1000;
+  const maxViewportWidth =
+    Math.round(aspectRatio * maxImageHeightVh * 1000) / 1000;
 
   return (
     <div className={cn("flex flex-col gap-5", className)}>
