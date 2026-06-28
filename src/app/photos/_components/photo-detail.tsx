@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon } from "lucide-react";
 import type { AlbumPhoto } from "@/lib/db/data/photos";
 import { cn } from "@/lib/utils";
 
@@ -8,18 +8,12 @@ export function PhotoDetail({
   albumTitle,
   photo,
   backHref,
-  prevHref,
-  nextHref,
-  replaceNav = false,
   maxImageHeightVh = 72,
   className,
 }: {
   albumTitle: string;
   photo: AlbumPhoto;
   backHref?: string;
-  prevHref?: string;
-  nextHref?: string;
-  replaceNav?: boolean;
   maxImageHeightVh?: number;
   className?: string;
 }) {
@@ -57,31 +51,6 @@ export function PhotoDetail({
           className="h-auto w-full object-contain"
         />
       </figure>
-
-      {prevHref && (
-        <Link
-          href={prevHref}
-          scroll={false}
-          replace={replaceNav}
-          aria-label="上一張"
-          className="fixed left-2 top-1/2 z-10 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm transition hover:bg-background sm:left-4 sm:size-12"
-        >
-          <ChevronLeftIcon className="size-5 sm:size-6" />
-        </Link>
-      )}
-
-      {nextHref && (
-        <Link
-          href={nextHref}
-          scroll={false}
-          replace={replaceNav}
-          aria-label="下一張"
-          className="fixed right-2 top-1/2 z-10 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm transition hover:bg-background sm:right-4 sm:size-12"
-        >
-          <ChevronRightIcon className="size-5 sm:size-6" />
-        </Link>
-      )}
-
       <p className="leading-relaxed text-lg text-muted-foreground">
         {photo.caption}
       </p>

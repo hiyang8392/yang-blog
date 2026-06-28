@@ -64,6 +64,7 @@ export default async function AlbumPage({
       <PhotoGrid
         key={album.slug}
         albumSlug={album.slug}
+        albumTitle={album.title}
         photos={album.photos}
       />
     </div>

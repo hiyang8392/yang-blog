@@ -2,21 +2,25 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import type { AlbumPhoto } from "@/lib/db/data/photos";
+import { PhotoLightbox } from "@/app/photos/_components/photo-lightbox";
 
 const DEFAULT_VISIBLE_COUNT = 18;
 
 export function PhotoGrid({
   albumSlug,
+  albumTitle,
   photos,
 }: {
   albumSlug: string;
+  albumTitle: string;
   photos: AlbumPhoto[];
 }) {
   const [visibleCount, setVisibleCount] = useState(
     Math.min(DEFAULT_VISIBLE_COUNT, photos.length),
   );
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const visiblePhotos = useMemo(
     () => photos.slice(0, visibleCount),
@@ -25,6 +29,41 @@ export function PhotoGrid({
 
   const observerRef = useRef<HTMLDivElement | null>(null);
   const hasMore = visibleCount < photos.length;
+
+  const photoHref = useCallback(
+    (index: number) => `/photos/${albumSlug}/photo/${photos[index].id}`,
+    [albumSlug, photos],
+  );
+
+  const openAt = useCallback(
+    (index: number) => {
+      setActiveIndex(index);
+      window.history.pushState({ photoLightbox: true }, "", photoHref(index));
+    },
+    [photoHref],
+  );
+
+  const selectAt = useCallback(
+    (index: number) => {
+      setActiveIndex(index);
+      window.history.replaceState(
+        { photoLightbox: true },
+        "",
+        photoHref(index),
+      );
+    },
+    [photoHref],
+  );
+
+  const close = useCallback(() => {
+    window.history.back();
+  }, []);
+
+  useEffect(() => {
+    const handlePopState = () => setActiveIndex(null);
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   useEffect(() => {
     if (!hasMore) {
@@ -64,11 +103,24 @@ export function PhotoGrid({
   return (
     <>
       <div className="grid grid-cols-3 gap-1 sm:gap-2">
-        {visiblePhotos.map((photo) => (
+        {visiblePhotos.map((photo, index) => (
           <Link
             key={photo.id}
-            href={`/photos/${albumSlug}/photo/${photo.id}`}
+            href={photoHref(index)}
             scroll={false}
+            onClick={(event) => {
+              if (
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey ||
+                event.button !== 0
+              ) {
+                return;
+              }
+              event.preventDefault();
+              openAt(index);
+            }}
             className="group relative overflow-hidden bg-muted aspect-square"
             aria-label={`open ${photo.alt}`}
           >
@@ -84,6 +136,16 @@ export function PhotoGrid({
         ))}
       </div>
       <div ref={observerRef} className="h-12" aria-hidden />
+
+      {activeIndex !== null && (
+        <PhotoLightbox
+          albumTitle={albumTitle}
+          photos={photos}
+          index={activeIndex}
+          onIndexChange={selectAt}
+          onClose={close}
+        />
+      )}
     </>
   );
 }
