@@ -56,29 +56,6 @@ export const getPhoto = cache(
   },
 );
 
-export const getPhotoWithNavigation = cache(
-  async (albumSlug: string, photoId: string) => {
-    const album = await getAlbum(albumSlug);
-
-    if (!album) {
-      return null;
-    }
-
-    const index = album.photos.findIndex((item) => item.id === photoId);
-
-    if (index === -1) {
-      return null;
-    }
-
-    const photo = album.photos[index];
-    const prev = index > 0 ? album.photos[index - 1] : null;
-    const next =
-      index < album.photos.length - 1 ? album.photos[index + 1] : null;
-
-    return { album, photo, prev, next };
-  },
-);
-
 export async function getAlbumSlugs() {
   return await prisma.album.findMany({
     where: { published: true },
