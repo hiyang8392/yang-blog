@@ -57,7 +57,7 @@ export function PhotoLightbox({
     <div
       role="dialog"
       aria-modal="true"
-      className="px-4 py-6 sm:px-6 sm:py-10 fixed inset-0 z-100 overflow-y-auto bg-background/95 backdrop-blur-md"
+      className="px-4 py-6 sm:px-6 sm:py-10 fixed inset-0 z-100 overflow-y-auto bg-background/95 backdrop-blur-md [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       onClick={onClose}
     >
       <Button
@@ -94,7 +94,7 @@ export function PhotoLightbox({
             event.stopPropagation();
             goPrev();
           }}
-          className="fixed left-6 top-1/2 z-10 inline-flex size-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition hover:bg-background/60 hover:text-foreground/90 sm:left-4 sm:size-12 opacity-60 sm:opacity-100"
+          className="fixed left-6 sm:left-4 top-1/2 z-10 inline-flex size-5 sm:size-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition before:absolute before:-inset-3 before:content-[''] hover:bg-background/60 hover:text-foreground/90 opacity-60 sm:opacity-100"
         >
           <ChevronLeftIcon className="size-5 sm:size-6" />
         </button>
@@ -108,7 +108,7 @@ export function PhotoLightbox({
             event.stopPropagation();
             goNext();
           }}
-          className="fixed right-6 top-1/2 z-10 inline-flex size-5 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition hover:bg-background/60 hover:text-foreground/90 sm:right-4 sm:size-12 opacity-60 sm:opacity-100"
+          className="fixed right-6 sm:right-4 top-1/2 z-10 inline-flex size-5 sm:size-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition before:absolute before:-inset-3 before:content-[''] hover:bg-background/60 hover:text-foreground/90 opacity-60 sm:opacity-100"
         >
           <ChevronRightIcon className="size-5 sm:size-6" />
         </button>

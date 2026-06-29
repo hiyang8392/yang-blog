@@ -35,22 +35,18 @@ export function PhotoGrid({
     [albumSlug, photos],
   );
 
-  const openAt = useCallback(
+  const openPhoto = useCallback(
     (index: number) => {
       setActiveIndex(index);
-      window.history.pushState({ photoLightbox: true }, "", photoHref(index));
+      window.history.pushState({}, "", photoHref(index));
     },
     [photoHref],
   );
 
-  const selectAt = useCallback(
+  const selectPhoto = useCallback(
     (index: number) => {
       setActiveIndex(index);
-      window.history.replaceState(
-        { photoLightbox: true },
-        "",
-        photoHref(index),
-      );
+      window.history.replaceState({}, "", photoHref(index));
     },
     [photoHref],
   );
@@ -108,6 +104,7 @@ export function PhotoGrid({
             key={photo.id}
             href={photoHref(index)}
             scroll={false}
+            prefetch={false}
             onClick={(event) => {
               if (
                 event.metaKey ||
@@ -119,7 +116,7 @@ export function PhotoGrid({
                 return;
               }
               event.preventDefault();
-              openAt(index);
+              openPhoto(index);
             }}
             className="group relative overflow-hidden bg-muted aspect-square"
             aria-label={`open ${photo.alt}`}
@@ -142,7 +139,7 @@ export function PhotoGrid({
           albumTitle={albumTitle}
           photos={photos}
           index={activeIndex}
-          onIndexChange={selectAt}
+          onIndexChange={selectPhoto}
           onClose={close}
         />
       )}

@@ -12,7 +12,7 @@
 
 文章內容以 `.md` 格式，存放於 Supabase(PostgreSQL) 資料庫，透過 build 階段時預先渲染成靜態頁面，搭配 `revalidatePath` 做快取更新。
 
-相片頁的部分，跟文章一樣預先渲染成靜態頁面，實作相簿內瀏覽相片功能 lightbox，相片存放在 Supabase Storage。
+相片的部分，實作相簿內瀏覽相片功能。從相簿頁點進相片頁時，以 Lightbox 效果呈現。直接開啟相片頁連結，則是進入整頁的相片頁。相片跟文章一樣預先渲染成靜態頁面，檔案存放在 Supabase Storage。
 
 ## 架構
 
@@ -23,7 +23,7 @@
 * `/posts/[slug]` 文章頁
 * `/category/[slug]` 分類文章列表
 * `/photos`、`/photos/[albumSlug]` 相簿列表 / 相簿頁
-* `/photos/[albumSlug]/photo/[photoId]` 相片頁（相簿內點開為 lightbox 效果）
+* `/photos/[albumSlug]/photo/[photoId]` 相片頁
 * `/projects` 作品集
 * `/about` 關於我
 
@@ -50,9 +50,9 @@
 
 ### 3. 相片頁實作
 
-* 從相簿頁點進相片時，以 `_components/photo-lightbox` 蓋在相簿頁上
+* 從相簿頁點進相片時，以 `_components/photo-lightbox` Lightbox 效果呈現在相簿頁上
 * 上一張 / 下一張用 `history.pushState` / `replaceState` 同步網址，不會向 server 重新 fetch
-* 直接開啟或重新整理 `/photos/[albumSlug]/photo/[photoId]` 時，則走 `photo/[photoId]/page.tsx` 的 SSG 全頁
+* 直接開啟或重新整理 `/photos/[albumSlug]/photo/[photoId]` 時，則是走 `photo/[photoId]/page.tsx` 的 SSG 頁面
 
 ### 4. 動態 OG Image
 
@@ -61,7 +61,7 @@
 
 ### 5. 其他
 
-另有寫一篇文章放在網站內可以參考：[使用 Next.js 建立部落格](https://yangisgood.com/posts/create-blog-with-nextjs)
+另有寫一篇部落格架設過程的文章放在網站內，請參考：[使用 Next.js 建立部落格](https://yangisgood.com/posts/create-blog-with-nextjs)
 
 
 ## 技術
