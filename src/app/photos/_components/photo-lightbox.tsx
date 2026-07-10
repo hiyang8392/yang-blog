@@ -56,7 +56,7 @@ export function PhotoLightbox({
         type="button"
         variant="ghost"
         size="icon-lg"
-        className="fixed right-4 top-4 z-10 rounded-full bg-background/80 shadow-sm cursor-pointer size-6 sm:size-12 opacity-60 sm:opacity-100"
+        className="fixed right-4 top-4 z-10 rounded-full bg-background/80 shadow-sm cursor-pointer size-6 sm:size-12 before:absolute before:-inset-4 before:content-[''] opacity-60 sm:opacity-100"
         onClick={(event) => {
           event.stopPropagation();
           onClose();
@@ -79,31 +79,35 @@ export function PhotoLightbox({
       </div>
 
       {hasPrev && (
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-lg"
           aria-label="上一張"
           onClick={(event) => {
             event.stopPropagation();
             onIndexChange(index - 1);
           }}
-          className="fixed left-6 sm:left-4 top-1/2 z-10 inline-flex size-5 sm:size-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition before:absolute before:-inset-3 before:content-[''] hover:bg-background/60 hover:text-foreground/90 opacity-60 sm:opacity-100"
+          className="fixed left-6 sm:left-4 top-1/2 z-10 size-5 sm:size-12 -translate-y-1/2 active:not-aria-[haspopup]:-translate-y-1/2 cursor-pointer rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm before:absolute before:-inset-4 before:content-[''] opacity-60 sm:opacity-100"
         >
           <ChevronLeftIcon className="size-5 sm:size-6" />
-        </button>
+        </Button>
       )}
 
       {hasNext && (
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-lg"
           aria-label="下一張"
           onClick={(event) => {
             event.stopPropagation();
             onIndexChange(index + 1);
           }}
-          className="fixed right-6 sm:right-4 top-1/2 z-10 inline-flex size-5 sm:size-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition before:absolute before:-inset-3 before:content-[''] hover:bg-background/60 hover:text-foreground/90 opacity-60 sm:opacity-100"
+          className="fixed right-6 sm:right-4 top-1/2 z-10 size-5 sm:size-12 -translate-y-1/2 active:not-aria-[haspopup]:-translate-y-1/2 cursor-pointer rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm before:absolute before:-inset-4 before:content-[''] opacity-60 sm:opacity-100"
         >
           <ChevronRightIcon className="size-5 sm:size-6" />
-        </button>
+        </Button>
       )}
     </div>
   );
