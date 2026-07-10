@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PhotoDetail } from "@/app/photos/_components/photo-detail";
@@ -23,22 +23,14 @@ export function PhotoLightbox({
   const hasPrev = index > 0;
   const hasNext = index < photos.length - 1;
 
-  const goPrev = useCallback(() => {
-    onIndexChange(Math.max(0, index - 1));
-  }, [index, onIndexChange]);
-
-  const goNext = useCallback(() => {
-    onIndexChange(Math.min(photos.length - 1, index + 1));
-  }, [index, photos.length, onIndexChange]);
-
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         onClose();
       } else if (event.key === "ArrowLeft" && index > 0) {
-        goPrev();
+        onIndexChange(index - 1);
       } else if (event.key === "ArrowRight" && index < photos.length - 1) {
-        goNext();
+        onIndexChange(index + 1);
       }
     };
 
@@ -47,7 +39,25 @@ export function PhotoLightbox({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [goPrev, goNext, onClose, index, photos.length]);
+  }, [index, photos.length, onIndexChange, onClose]);
+
+  useEffect(() => {
+    const { body } = document;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
+    const previousOverflow = body.style.overflow;
+    const previousPaddingRight = body.style.paddingRight;
+
+    body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    return () => {
+      body.style.overflow = previousOverflow;
+      body.style.paddingRight = previousPaddingRight;
+    };
+  }, []);
 
   if (!photo) {
     return null;
@@ -64,7 +74,7 @@ export function PhotoLightbox({
         type="button"
         variant="ghost"
         size="icon-lg"
-        className="fixed right-4 top-4 z-10 rounded-full bg-background/80 shadow-sm cursor-pointer size-6 sm:size-12 opacity-60 sm:opacity-100"
+        className="fixed right-4 top-4 z-10 rounded-full bg-background/80 shadow-sm cursor-pointer size-6 sm:size-12 before:absolute before:-inset-4 before:content-[''] opacity-60 sm:opacity-100"
         onClick={(event) => {
           event.stopPropagation();
           onClose();
@@ -87,31 +97,35 @@ export function PhotoLightbox({
       </div>
 
       {hasPrev && (
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-lg"
           aria-label="上一張"
           onClick={(event) => {
             event.stopPropagation();
-            goPrev();
+            onIndexChange(index - 1);
           }}
-          className="fixed left-6 sm:left-4 top-1/2 z-10 inline-flex size-5 sm:size-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition before:absolute before:-inset-3 before:content-[''] hover:bg-background/60 hover:text-foreground/90 opacity-60 sm:opacity-100"
+          className="fixed left-6 sm:left-4 top-1/2 z-10 size-5 sm:size-12 -translate-y-1/2 active:not-aria-[haspopup]:-translate-y-1/2 cursor-pointer rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm before:absolute before:-inset-4 before:content-[''] opacity-60 sm:opacity-100"
         >
           <ChevronLeftIcon className="size-5 sm:size-6" />
-        </button>
+        </Button>
       )}
 
       {hasNext && (
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-lg"
           aria-label="下一張"
           onClick={(event) => {
             event.stopPropagation();
-            goNext();
+            onIndexChange(index + 1);
           }}
-          className="fixed right-6 sm:right-4 top-1/2 z-10 inline-flex size-5 sm:size-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm transition before:absolute before:-inset-3 before:content-[''] hover:bg-background/60 hover:text-foreground/90 opacity-60 sm:opacity-100"
+          className="fixed right-6 sm:right-4 top-1/2 z-10 size-5 sm:size-12 -translate-y-1/2 active:not-aria-[haspopup]:-translate-y-1/2 cursor-pointer rounded-full bg-background/80 text-foreground/60 shadow-sm backdrop-blur-sm before:absolute before:-inset-4 before:content-[''] opacity-60 sm:opacity-100"
         >
           <ChevronRightIcon className="size-5 sm:size-6" />
-        </button>
+        </Button>
       )}
     </div>
   );
