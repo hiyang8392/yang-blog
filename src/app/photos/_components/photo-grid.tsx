@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { AlbumPhoto } from "@/lib/db/data/photos";
 import { PhotoLightbox } from "@/app/photos/_components/photo-lightbox";
 
@@ -22,38 +22,27 @@ export function PhotoGrid({
   );
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const visiblePhotos = useMemo(
-    () => photos.slice(0, visibleCount),
-    [photos, visibleCount],
-  );
+  const visiblePhotos = photos.slice(0, visibleCount);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
   const hasMore = visibleCount < photos.length;
 
-  const photoHref = useCallback(
-    (index: number) => `/photos/${albumSlug}/photo/${photos[index].id}`,
-    [albumSlug, photos],
-  );
+  const photoHref = (index: number) =>
+    `/photos/${albumSlug}/photo/${photos[index].id}`;
 
-  const openPhoto = useCallback(
-    (index: number) => {
-      setActiveIndex(index);
-      window.history.pushState({}, "", photoHref(index));
-    },
-    [photoHref],
-  );
+  const openPhoto = (index: number) => {
+    setActiveIndex(index);
+    window.history.pushState({}, "", photoHref(index));
+  };
 
-  const selectPhoto = useCallback(
-    (index: number) => {
-      setActiveIndex(index);
-      window.history.replaceState({}, "", photoHref(index));
-    },
-    [photoHref],
-  );
+  const selectPhoto = (index: number) => {
+    setActiveIndex(index);
+    window.history.replaceState({}, "", photoHref(index));
+  };
 
-  const close = useCallback(() => {
+  const onClose = () => {
     window.history.back();
-  }, []);
+  };
 
   useEffect(() => {
     const handlePopState = () => setActiveIndex(null);
@@ -140,7 +129,7 @@ export function PhotoGrid({
           photos={photos}
           index={activeIndex}
           onIndexChange={selectPhoto}
-          onClose={close}
+          onClose={onClose}
         />
       )}
     </>
